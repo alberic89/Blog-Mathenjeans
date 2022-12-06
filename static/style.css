@@ -165,7 +165,8 @@ border-radius:50%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
-    font-size: 12px
+    font-size: 12px;
+    background-color: lightgray;
 }
 
 .foot {
@@ -187,6 +188,7 @@ margin-right: 5px;
 .mobile {
 display:none;
 }
+
 .pc {
 display:initial;
 }
@@ -255,6 +257,11 @@ transition: all .7s cubic-bezier(0.39, 0.575, 0.565, 1);
   transform: rotate(-405deg);
 }
 
+@media (max-width: 450px) {
+	.footer {
+		display:none;
+	}
+}
 @media (max-width: 1024px) {
 	html{
 	padding: 0px;
