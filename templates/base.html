@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Blog aux élèves des lycées St Étienne et Raymond Janot Curie de Sens, pour l'activité de recherche MATh.en.JEANS, aussi appelée Math en Jeans." />
+<title>{% block title %}{% endblock %} | Math en Jeans à Sens</title>
+<body>
+<nav>
+  <h1><a href="{{ url_for('index') }}" alt="Page d'accueil">MATh.en.JEANS</a></h1>
+  
+  <section class="top-nav mobile">
+    <input id="menu-toggle" type="checkbox" />
+    <label class="menu-button-container" for="menu-toggle">
+    <div class="menu-button"></div>
+  </label>
+    <ul class="menu">
+      <li><a href="/view/1"><button class="nav-button rond">1</button></a>
+      <a href="/view/2"><button class="nav-button rond">2</button></a>
+      <a href="/view/3"><button class="nav-button rond">3</button></a>
+      <a href="/view/4"><button class="nav-button rond">4</button></a>
+      {% if g.user %}
+      <a class="nav-connect" alt="Mon compte" href="{{ url_for('auth.me') }}"><svg style="margin-top: 6px;"width="32" height="32" version="1.0" viewBox="1,1,22,22" xmlns="http://www.w3.org/2000/svg"><title/><circle cx="12" cy="8" fill="#464646" r="4"/><path d="M20,19v1a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V19a6,6,0,0,1,6-6h4A6,6,0,0,1,20,19Z" fill="#464646"/></svg></a>
+      <a class="nav-connect" alt="Déconnexion" href="{{ url_for('auth.logout') }}"><svg style="margin-top: 6px;"width="32" height="32" version="1.0" xmlns="http://www.w3.org/2000/svg"><title/><g data-name="Layer 5" id="Layer_5"><path d="M11,13H8V12a1,1,0,0,0-.62-.92,1,1,0,0,0-1.09.21l-4,4a1,1,0,0,0,0,1.42l4,4A1,1,0,0,0,7,21a.84.84,0,0,0,.38-.08A1,1,0,0,0,8,20V19h3a1,1,0,0,0,1-1V14A1,1,0,0,0,11,13Z"/><path d="M20,29.52a2,2,0,0,1-1.12-.34A2,2,0,0,1,18,27.52v-23a2,2,0,0,1,2.74-1.86l8,3.2A2,2,0,0,1,30,7.68V24.32a2,2,0,0,1-1.26,1.86l-8,3.2A1.91,1.91,0,0,1,20,29.52Zm0-25V27.53l8-3.21V7.68Z"/><path d="M22,19a1,1,0,0,1-1-1V14a1,1,0,0,1,2,0v4A1,1,0,0,1,22,19Z"/><path d="M19,5H15a2,2,0,0,0-2,2V26a2,2,0,0,0,2,2h4a1,1,0,0,0,1-1V6A1,1,0,0,0,19,5Z"/><path d="M20,24c6.83-.25,8-5,8-6.67l1,7a1,1,0,0,1-.63.93l-8.53,3.47-.23-3.5Z"/></g></svg></a>
+	  {% else %}
+	  <a class="nav-connect" alt="Se connecter" href="{{ url_for('auth.login') }}"><svg style="margin-top: 6px;"width="32" height="32" version="1.0" xmlns="http://www.w3.org/2000/svg"><title/><g data-name="Layer 4" id="Layer_4"><path d="M11.71,15.29l-4-4a1,1,0,0,0-1.09-.21A1,1,0,0,0,6,12v1H3a1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H6v1a1,1,0,0,0,.62.92A.84.84,0,0,0,7,21a1,1,0,0,0,.71-.29l4-4A1,1,0,0,0,11.71,15.29Z"/><path d="M20,29.52a2,2,0,0,1-1.12-.34A2,2,0,0,1,18,27.52v-23a2,2,0,0,1,2.74-1.86l8,3.2A2,2,0,0,1,30,7.68V24.32a2,2,0,0,1-1.26,1.86l-8,3.2A1.91,1.91,0,0,1,20,29.52Zm0-25V27.53l8-3.21V7.68Z"/><path d="M22,19a1,1,0,0,1-1-1V14a1,1,0,0,1,2,0v4A1,1,0,0,1,22,19Z"/><path d="M19,5H15a2,2,0,0,0-2,2V26a2,2,0,0,0,2,2h4a1,1,0,0,0,1-1V6A1,1,0,0,0,19,5Z"/><path d="M20,24c6.83-.25,8-5,8-6.67l1,7a1,1,0,0,1-.63.93l-8.53,3.47-.23-3.5Z"/></g></svg></a>
+    {% endif %}</ul>
+  </section>
+  
+  <div id="button-div" class="nav-button pc">
+		<a href="/view/1" class="nav-button"><button class="rond">1</button></a>
+		<a href="/view/2"class="nav-button"><button class="rond">2</button></a>
+		<a href="/view/3"class="nav-button"><button class="rond">3</button></a>
+		<a href="/view/4"class="nav-button"><button class="rond">4</button></a>
+	</div>
+  <div class="nav-connect pc">
+	{% if g.user %}
+      <a class="nav-connect nav-button" alt="Mon compte" href="{{ url_for('auth.me') }}"><svg style="margin-top: 6px;"width="32" height="32" version="1.0" viewBox="1,1,22,22" xmlns="http://www.w3.org/2000/svg"><title/><circle cx="12" cy="8" fill="#464646" r="4"/><path d="M20,19v1a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V19a6,6,0,0,1,6-6h4A6,6,0,0,1,20,19Z" fill="#464646"/></svg></a>
+      <a class="nav-connect nav-button" alt="Déconnexion" href="{{ url_for('auth.logout') }}"><svg style="margin-top: 6px;"width="32" height="32" version="1.0" xmlns="http://www.w3.org/2000/svg"><title/><g data-name="Layer 5" id="Layer_5"><path d="M11,13H8V12a1,1,0,0,0-.62-.92,1,1,0,0,0-1.09.21l-4,4a1,1,0,0,0,0,1.42l4,4A1,1,0,0,0,7,21a.84.84,0,0,0,.38-.08A1,1,0,0,0,8,20V19h3a1,1,0,0,0,1-1V14A1,1,0,0,0,11,13Z"/><path d="M20,29.52a2,2,0,0,1-1.12-.34A2,2,0,0,1,18,27.52v-23a2,2,0,0,1,2.74-1.86l8,3.2A2,2,0,0,1,30,7.68V24.32a2,2,0,0,1-1.26,1.86l-8,3.2A1.91,1.91,0,0,1,20,29.52Zm0-25V27.53l8-3.21V7.68Z"/><path d="M22,19a1,1,0,0,1-1-1V14a1,1,0,0,1,2,0v4A1,1,0,0,1,22,19Z"/><path d="M19,5H15a2,2,0,0,0-2,2V26a2,2,0,0,0,2,2h4a1,1,0,0,0,1-1V6A1,1,0,0,0,19,5Z"/><path d="M20,24c6.83-.25,8-5,8-6.67l1,7a1,1,0,0,1-.63.93l-8.53,3.47-.23-3.5Z"/></g></svg></a>
+	{% else %}
+     <a class="nav-connect nav-button" alt="Se connecter" href="{{ url_for('auth.login') }}"><svg style="margin-top: 6px;"width="32" height="32" version="1.0" xmlns="http://www.w3.org/2000/svg"><title/><g data-name="Layer 4" id="Layer_4"><path d="M11.71,15.29l-4-4a1,1,0,0,0-1.09-.21A1,1,0,0,0,6,12v1H3a1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H6v1a1,1,0,0,0,.62.92A.84.84,0,0,0,7,21a1,1,0,0,0,.71-.29l4-4A1,1,0,0,0,11.71,15.29Z"/><path d="M20,29.52a2,2,0,0,1-1.12-.34A2,2,0,0,1,18,27.52v-23a2,2,0,0,1,2.74-1.86l8,3.2A2,2,0,0,1,30,7.68V24.32a2,2,0,0,1-1.26,1.86l-8,3.2A1.91,1.91,0,0,1,20,29.52Zm0-25V27.53l8-3.21V7.68Z"/><path d="M22,19a1,1,0,0,1-1-1V14a1,1,0,0,1,2,0v4A1,1,0,0,1,22,19Z"/><path d="M19,5H15a2,2,0,0,0-2,2V26a2,2,0,0,0,2,2h4a1,1,0,0,0,1-1V6A1,1,0,0,0,19,5Z"/><path d="M20,24c6.83-.25,8-5,8-6.67l1,7a1,1,0,0,1-.63.93l-8.53,3.47-.23-3.5Z"/></g></svg></a>
+    {% endif %}
+</div></div>
+</nav>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>
+
+<div id="footer" class="footer">
+        {% block footer %}
+<div class="foot">
+	<h4>MATh.en.JEANS</h4>
+	<a href="https://mathenjeans.fr/">Site officiel de MATh.en.JEANS</a>
+</div>
+<div class="foot">
+<h4>Voir le code source :</h4>
+<a href="https://github.com/alberic89/flask/tree/main/examples/tutorial/flaskr"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"></a>
+</div>
+<div class="foot">
+<h4>Signaler un problème :</h4>
+<a href="mailto:alberic89@gmx.com">Envoyer un courriel à l'administrateur</a>
+</div>
+        {% endblock %}
+</div>
+</body></html>

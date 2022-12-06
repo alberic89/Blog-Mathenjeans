@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Mon compte - {{g.user['username']}}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="email">Adresse mail de votre compte</label>
+    <input type="email" name="email" id="email" required value="{{ g.user['email'] }}">
+    <label for="password">Mot de passe actuel (obligatoire)</label>
+    <input type="password" name="password" id="password" autocomplete="current-password" required>
+    <label for="npassword">Nouveau mot de passe (laissez vide pour ne pas changer)</label>
+    <input type="password" name="npassword" id="npassword" autocomplete="new-password">
+    <label for="confirm">Confirmer le mot de passe</label>
+    <input type="password" name="confirm" id="confirm">
+    <label for="sujet">Votre sujet préféré :</label>
+    	<select name="sujet" id="sujet">
+		<option value="0" {{'SELECTED' if g.user['defsujet']== 0}}>Tous</option>
+		<option value="1" {{'SELECTED' if g.user['defsujet']== 1}}>Sujet 1 : Math Enjonnas, joueur</option>
+		<option value="2" {{'SELECTED' if g.user['defsujet']== 2}}>Sujet 2 : Le gâteau des Barbot</option>
+		<option value="3" {{'SELECTED' if g.user['defsujet']== 3}}>Sujet 3 : L'élection présidentielle</option>
+		<option value="4" {{'SELECTED' if g.user['defsujet']== 4}}>Sujet 4 : Des escargots et des salades</option>
+	</select>
+	<hr>
+	<input type="submit" value="Valider">
+  </form>
+{% endblock %}

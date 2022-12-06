@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Mot de passe oublié{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="email">Adresse mail de votre compte</label>
+    <input type="email" name="email" id="email" required>
+    <input type="submit" value="Réinitialiser le mot de passe" class="danger" onclick="return confirm('Êtes-vous sûr ?');">
+  </form>
+{% endblock %}

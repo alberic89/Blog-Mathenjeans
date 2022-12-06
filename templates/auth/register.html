@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}S'enregistrer{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="username">Nom d'utilisateur</label>
+    <input name="username" id="username" required>
+    <label for="password">Mot de passe</label>
+    <input type="password" name="password" id="password" autocomplete="new-password" required>
+    <label for="confirm">Confirmer le mot de passe</label>
+    <input type="password" name="confirm" id="confirm" required>
+    <label for="email">Adresse mail (utilisée seulement si mot de passe oublié)</label>
+    <input type="email" name="email" id="email" required>
+    <label for="sujet">Votre sujet préféré :</label>
+	<select name="sujet" id="sujet">
+		<option value="0">Tous</option>
+		<option value="1">Sujet 1 : Math Enjonnas, joueur</option>
+		<option value="2">Sujet 2 : Le gâteau des Barbot</option>
+		<option value="3">Sujet 3 : L'élection présidentielle</option>
+		<option value="4">Sujet 4 : Des escargots et des salades</option>
+	</select>
+<hr>
+    <input type="submit" value="S'enregistrer">
+  </form>
+{% endblock %}

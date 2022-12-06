@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Éditer "{{ post['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+	<label for="sujet">Sujet relatif au post :</label>
+    	<select name="sujet" id="sujet">
+		<option value="0" {{'SELECTED' if post['sujet']== 0}}>Tous</option>
+		<option value="1" {{'SELECTED' if post['sujet']== 1}}>Sujet 1 : Math Enjonnas, joueur</option>
+		<option value="2" {{'SELECTED' if post['sujet']== 2}}>Sujet 2 : Le gâteau des Barbot</option>
+		<option value="3" {{'SELECTED' if post['sujet']== 3}}>Sujet 3 : L'élection présidentielle</option>
+		<option value="4" {{'SELECTED' if post['sujet']== 4}}>Sujet 4 : Des escargots et des salades</option>
+	</select> <hr>
+    <label for="title">Titre</label>
+    <input name="title" id="title" value="{{ request.form['title'] or post['title'] }}" required>
+    {% if g.user['id'] == 1 %}
+    <label for="sujet">Mise en forme ?</label>
+    <select name="html" id="html">
+		<option value="" SELECTED>Markdown --recommandé--</option>
+		<option value="True" >HTML --⚠ Dangereux !--</option>
+	</select> <hr>
+	{% endif %}
+    <label for="body">Corps</label>
+    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+    <input type="submit" value="Enregistrer">
+  </form>
+  <hr>
+  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+    <input class="danger" type="submit" value="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
+  </form>
+{% endblock %}

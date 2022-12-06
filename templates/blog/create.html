@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Nouveau Post{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+	<label for="sujet">Sujet relatif au post :</label>
+    	<select name="sujet" id="sujet">
+		<option value="0" {{'SELECTED' if g.user['defsujet']== 0}}>Tous</option>
+		<option value="1" {{'SELECTED' if g.user['defsujet']== 1}}>Sujet 1 : Math Enjonnas, joueur</option>
+		<option value="2" {{'SELECTED' if g.user['defsujet']== 2}}>Sujet 2 : Le gâteau des Barbot</option>
+		<option value="3" {{'SELECTED' if g.user['defsujet']== 3}}>Sujet 3 : L'élection présidentielle</option>
+		<option value="4" {{'SELECTED' if g.user['defsujet']== 4}}>Sujet 4 : Des escargots et des salades</option>
+	</select> <hr>
+    <label for="title">Titre</label>
+    <input name="title" id="title" value="{{ request.form['title'] }}" required>
+    {% if g.user['id'] == 1 %}
+    <label for="sujet">Mise en forme ?</label>
+    <select name="html" id="html">
+		<option value="" SELECTED>Markdown --recommandé--</option>
+		<option value="True" >HTML --⚠ Dangereux !--</option>
+	</select> <hr>
+	{% endif %}
+    <label for="body">Corps</label>
+    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+    <input type="submit" value="Poster">
+  </form>
+{% endblock %}
