@@ -19,6 +19,8 @@
       <a href="/view/2"><button class="nav-button rond">2</button></a>
       <a href="/view/3"><button class="nav-button rond">3</button></a>
       <a href="/view/4"><button class="nav-button rond">4</button></a>
+      <a href="/all"><button class="nav-button rond">∀</button></a>
+      </li><li>
       {% if g.user %}
       <a class="nav-connect" alt="Mon compte" href="{{ url_for('auth.me') }}"><svg style="margin-top: 6px;"width="32" height="32" version="1.0" viewBox="1,1,22,22" xmlns="http://www.w3.org/2000/svg"><title/><circle cx="12" cy="8" fill="#464646" r="4"/><path d="M20,19v1a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V19a6,6,0,0,1,6-6h4A6,6,0,0,1,20,19Z" fill="#464646"/></svg></a>
       <a class="nav-connect" alt="Déconnexion" href="{{ url_for('auth.logout') }}"><svg style="margin-top: 6px;"width="32" height="32" version="1.0" xmlns="http://www.w3.org/2000/svg"><title/><g data-name="Layer 5" id="Layer_5"><path d="M11,13H8V12a1,1,0,0,0-.62-.92,1,1,0,0,0-1.09.21l-4,4a1,1,0,0,0,0,1.42l4,4A1,1,0,0,0,7,21a.84.84,0,0,0,.38-.08A1,1,0,0,0,8,20V19h3a1,1,0,0,0,1-1V14A1,1,0,0,0,11,13Z"/><path d="M20,29.52a2,2,0,0,1-1.12-.34A2,2,0,0,1,18,27.52v-23a2,2,0,0,1,2.74-1.86l8,3.2A2,2,0,0,1,30,7.68V24.32a2,2,0,0,1-1.26,1.86l-8,3.2A1.91,1.91,0,0,1,20,29.52Zm0-25V27.53l8-3.21V7.68Z"/><path d="M22,19a1,1,0,0,1-1-1V14a1,1,0,0,1,2,0v4A1,1,0,0,1,22,19Z"/><path d="M19,5H15a2,2,0,0,0-2,2V26a2,2,0,0,0,2,2h4a1,1,0,0,0,1-1V6A1,1,0,0,0,19,5Z"/><path d="M20,24c6.83-.25,8-5,8-6.67l1,7a1,1,0,0,1-.63.93l-8.53,3.47-.23-3.5Z"/></g></svg></a>
@@ -32,6 +34,7 @@
 		<a href="/view/2"class="nav-button"><button class="rond">2</button></a>
 		<a href="/view/3"class="nav-button"><button class="rond">3</button></a>
 		<a href="/view/4"class="nav-button"><button class="rond">4</button></a>
+		<a href="/all"class="nav-button"><button class="rond">∀</button></a>
 	</div>
   <div class="nav-connect pc">
 	{% if g.user %}

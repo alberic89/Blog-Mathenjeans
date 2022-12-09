@@ -193,14 +193,6 @@ display:none;
 display:initial;
 }
 
-.menu {
-  display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
 .menu > li {
   margin: 0 1rem;
   overflow: hidden;
@@ -298,7 +290,7 @@ transition: all .7s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
   #menu-toggle:checked ~ .menu li {
     border: 1px solid #333;
-    height: 50px;
+    height: 60px;
     padding: 0.5em 0;
     transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
   }

@@ -24,6 +24,17 @@ def index():
 	db = get_db()
 	posts = db.execute(
 		"SELECT p.id, title, body, created, author_id, username, html, edit, sujet"
+		" FROM post p JOIN user u ON p.author_id = u.id WHERE sujet == 0"
+		" ORDER BY created DESC"
+	).fetchall()
+	return render_template("blog/index.html", posts=posts)
+
+@bp.route("/all")
+def view_all():
+	"""Show all the posts, most recent first."""
+	db = get_db()
+	posts = db.execute(
+		"SELECT p.id, title, body, created, author_id, username, html, edit, sujet"
 		" FROM post p JOIN user u ON p.author_id = u.id"
 		" ORDER BY created DESC"
 	).fetchall()
@@ -35,7 +46,7 @@ def view(sujet):
 	db = get_db()
 	posts = db.execute(
 		"SELECT p.id, title, body, created, author_id, username, html, edit, sujet"
-		" FROM post p JOIN user u ON p.author_id = u.id WHERE sujet IN (0,?)"
+		" FROM post p JOIN user u ON p.author_id = u.id WHERE sujet == ?"
 		" ORDER BY created DESC",
 			(sujet,),
 	).fetchall()
@@ -102,8 +113,8 @@ def create():
 			
 			db = get_db()
 			db.execute(
-				"INSERT INTO post (title, body, author_id, html, sujet) VALUES (?, ?, ?, ?, ?)",
-				(title, body, g.user["id"], html, int(sujet)),
+				"INSERT INTO post (title, body, author_id, html, sujet, created) VALUES (?, ?, ?, ?, ?, ?)",
+				(title, body, g.user["id"], html, int(sujet), datetime.now()),
 			)
 			db.commit()
 			if g.user['defsujet']==0 :
@@ -112,6 +123,17 @@ def create():
 				return redirect(url_for("blog.view", sujet=g.user['defsujet']))
 
 	return render_template("blog/create.html")
+
+@bp.route("/<int:id>/")
+def show_post(id) :
+	db = get_db()
+	post = db.execute(
+		"SELECT p.id, title, body, created, author_id, username, html, edit, sujet"
+		" FROM post p JOIN user u ON p.author_id = u.id WHERE p.id == ?"
+		" ORDER BY created DESC",
+			(id,),
+	).fetchall()
+	return render_template("blog/index.html", posts=post)
 
 
 @bp.route("/<int:id>/update", methods=("GET", "POST"))
