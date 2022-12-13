@@ -137,7 +137,7 @@ def login():
 			except :
 				pass
 			if user['defsujet']==0 :
-				return redirect(url_for("index"))
+				return redirect(url_for("blog.view_all"))
 			else :
 				return redirect(url_for("blog.view", sujet=user['defsujet']))
 			
@@ -230,7 +230,7 @@ def me():
 			flash(f"Le sujet préféré de {g.user['username']} à été mis à jour vers le sujet {sujet}.\n")
 		if error is None :
 			if sujet=="0" :
-				return redirect(url_for("index"))
+				return redirect(url_for("blog.view_all"))
 			else :
 				return redirect(url_for("blog.view", sujet=sujet))
 		else :

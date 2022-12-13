@@ -13,7 +13,7 @@
       <header>
         <div>
           <h1>{{ post['title'] }}</h1>
-          <div class="about">Par {{ post['username'] }} le {{ post['created'].strftime('%e %b %Y à %H:%M') }}{% if post['edit'] %}</div><div class="about">Édité le {{ post['edit'].strftime('%e %b %Y à %H:%M') }}{% endif %}</div>
+          <div class="about">Par {{ post['username'] }} le {{ post['created'].strftime('%e %b %Y à %H:%M') }}</div>
           <div class="about">À propos d{{"e tout." if post['sujet']==0}}{{"u sujet 1." if post['sujet']==1}}{{"u sujet 2." if post['sujet']==2}}{{"u sujet 3." if post['sujet']==3}}{{"u sujet 4." if post['sujet']==4}}</div>
         </div>
         {% if g.user['id'] == post['author_id'] or g.user['id'] == 1 %}
@@ -25,6 +25,7 @@
       {% else %}
       <p class="body">{{ post['body'] | forceescape | markdown}}</p>
       {% endif %}
+      {% if post['edit'] %}<header><div class="about">Édité le {{ post['edit'].strftime('%d/%m/%-y à %H:%M') }}</div></header>{% endif %}
     </article>
     {% if not loop.last %}
       <hr>
