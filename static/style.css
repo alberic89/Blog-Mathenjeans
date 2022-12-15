@@ -57,6 +57,12 @@ nav ul li a, nav ul li span, header .action {
   padding: 0.5rem;
 }
 
+article {
+  font-family: serif;
+  font-variant-ligatures: none;
+  font-size: 17px;
+}
+
 .content {
   padding: 0 1rem 1rem;
 }
