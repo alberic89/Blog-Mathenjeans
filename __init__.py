@@ -6,19 +6,26 @@ from flask import send_from_directory
 from flaskext.markdown import Markdown
 from flask_inflate import Inflate
 
+
 def page_not_found(e):
-  return render_template('404.html'), 404
+    return render_template("404.html"), 404
+
 
 def forbiden(e):
-  return render_template('403.html', erreur=e), 403
+    return render_template("403.html", erreur=e), 403
+
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
-    app = Flask(__name__, instance_relative_config=True,static_url_path='', 
-            static_folder='static',)
+    app = Flask(
+        __name__,
+        instance_relative_config=True,
+        static_url_path="",
+        static_folder="static",
+    )
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbiden)
-    
+
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
         SECRET_KEY=os.urandom(40),
@@ -38,21 +45,24 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-    
+
     Markdown(app)
     inf = Inflate()
     inf.init_app(app)
 
-
     @app.route("/hello")
     def hello():
         return "Hello, World!"
-    
-    @app.route('/favicon.ico')
-    def favicon():
-        return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-   # register the database commands
+    @app.route("/favicon.ico")
+    def favicon():
+        return send_from_directory(
+            os.path.join(app.root_path, "static"),
+            "favicon.ico",
+            mimetype="image/vnd.microsoft.icon",
+        )
+
+    # register the database commands
     from flaskr import db
 
     db.init_app(app)
