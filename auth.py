@@ -136,7 +136,7 @@ def login():
 				if uuid.UUID(password, version=4).version == 4:
 					flash("Changez votre mot de passe !!!")
 					return redirect(url_for("auth.me"))
-			except:
+			except ValueError("badly formed hexadecimal UUID string"):
 				pass
 			if user["defsujet"] == 0:
 				return redirect(url_for("blog.view_all"))
