@@ -3,15 +3,16 @@ Un petit blog sympatoche propulsé par Python et Flask.
 
 Ce blog est prévu pour quatre sujets précis, mais est facilement adaptable à d'autres sujets, quel que soit leur nombre.
 
+Vous pouvez le voir en action [ici](https://mathenjeans.alwaysdata.net/).
 ## Installation
 
-Installez toutes les dépendances nécessaires.
+Installez toutes les dépendances nécessaires. (Voir le fichier requirement.txt)
 
 Copiez le code source dans un dossier sans y entrer.
 
 Définnissez la variable d'environnement `FLASK_APP=<nom_du_dossier>`
 
-Ensuite, lancez la commande :
+Ensuite, lancez la commande pour initaliser la base de données :
 ```
 flask init-db
 ```
