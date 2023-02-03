@@ -11,6 +11,7 @@ from flask import session
 from flask import url_for
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
+from werkzeug.exceptions import BadRequestKeyError
 
 from flaskr.db import get_db
 
@@ -22,7 +23,7 @@ def send(destemail, subject, message):
 
 	smtp_server = "smtp-mathenjeans.alwaysdata.net"
 	port = 465
-	destinateur = "mathenjeans@alwaysdata.net"
+	sender = "mathenjeans@alwaysdata.net"
 	password = os.environ["SMTP_PSWD"]
 	destinataire = destemail
 	message = f"Subject: {subject}\n\n{message}".encode("utf-8")
@@ -30,7 +31,7 @@ def send(destemail, subject, message):
 	try:
 		with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
 			server.login(destinateur, password)
-			server.sendmail(destinateur, destinataire, message)
+			server.sendmail(sender, destinataire, message)
 	except:
 
 		raise RuntimeError(f"Impossible d'envoyer l'email à l'adresse {destemail} !")
@@ -177,6 +178,7 @@ def forget():
 
 			except RuntimeError as e:
 				error = e
+				flash(e)
 
 			else:
 				db.execute(
@@ -189,7 +191,6 @@ def forget():
 				)
 				return redirect(url_for("auth.login"))
 
-
 	return render_template("auth/forget.html")
 
 
@@ -197,6 +198,11 @@ def forget():
 @login_required
 def me():
 	if request.method == "POST":
+		checkmail = False
+		try:
+			checkmail = request.form["checkmail"]
+		except BadRequestKeyError:
+			pass
 		email = request.form["email"]
 		pswd = request.form["password"]
 		npswd = request.form["npassword"]
@@ -240,15 +246,23 @@ def me():
 			if mailup or mdpup or sjup:
 				db.commit()
 
+			if checkmail:
+				send(
+					email,
+					"Test de votre adresse mail",
+					f"Bonjour {g.user['username']},\nVous avez demandé une vérification de votre adresse e-mail. Tout fonctionne.\nBonne journée !",
+				)
+				flash(f"Un mail a été envoyé à {email}")
+
 		if mailup:
 			flash(
-				f"L'adresse mail de {g.user['username']} à été mise à jour vers {email}.\n"
+				f"L'adresse mail de {g.user['username']} à été mise à jour vers {email}"
 			)
 		if mdpup:
 			flash(f"Le mot de passe de {g.user['username']} à été mis à jour.")
 		if sjup:
 			flash(
-				f"Le sujet préféré de {g.user['username']} à été mis à jour vers le sujet {sujet}.\n"
+				f"Le sujet préféré de {g.user['username']} à été mis à jour vers le sujet {sujet}"
 			)
 		if error is None:
 			if sujet == "0":

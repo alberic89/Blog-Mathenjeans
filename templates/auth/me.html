@@ -8,6 +8,10 @@
   <form method="post">
     <label for="email">Adresse mail de votre compte</label>
     <input type="email" name="email" id="email" required value="{{ g.user['email'] }}">
+	<div>
+		<input type="checkbox" id="checkmail" name="checkmail">
+		<label for="checkmail">Vérifier si l'envoi d'email fonctionne</label>
+	</div>
     <label for="password">Mot de passe actuel (obligatoire)</label>
     <input type="password" name="password" id="password" autocomplete="current-password" required>
     <label for="npassword">Nouveau mot de passe (laissez vide pour ne pas changer)</label>
