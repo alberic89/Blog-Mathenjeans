@@ -123,10 +123,8 @@ def login():
 			"SELECT * FROM user WHERE username = ?", (username,)
 		).fetchone()
 
-		if user is None:
-			error = "Nom d'utilisateur incorrect."
-		elif not check_password_hash(user["password"], password):
-			error = "Mot de passe incorrect."
+		if (user is None) or (not check_password_hash(user["password"], password)):
+			error = "Login incorrect."
 
 		if error is None:
 			# store the user id in a new session and return to the index
@@ -187,11 +185,10 @@ def forget():
 				)
 				db.commit()
 				flash(
-					f"Le mot de passe de {username} à bien été réinitialisé. Vérifiez votre boîte mail pour obtenir votre nouveau mot de passe."
+					"Si l'adresse est associée à utilisateur, un email à été envoyé. Vérifez vos mail."
 				)
 				return redirect(url_for("auth.login"))
 
-		flash(error)
 
 	return render_template("auth/forget.html")
 
