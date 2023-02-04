@@ -18,19 +18,18 @@ from flaskr.db import get_db
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 
-def send(destemail, subject, message):
+def send(destinataire, subject, message):
 	import smtplib, ssl, os
 
 	smtp_server = "smtp-mathenjeans.alwaysdata.net"
 	port = 465
 	sender = "mathenjeans@alwaysdata.net"
 	password = os.environ["SMTP_PSWD"]
-	destinataire = destemail
 	message = f"Subject: {subject}\n\n{message}".encode("utf-8")
 	context = ssl.create_default_context()
 	try:
 		with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-			server.login(destinateur, password)
+			server.login(sender, password)
 			server.sendmail(sender, destinataire, message)
 	except:
 

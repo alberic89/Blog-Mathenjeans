@@ -6,6 +6,8 @@
 
 {% block content %}
   <form method="post">
+	<label for="username">Nom d'utilisateur</label>
+    <input name="username" id="username" disabled value="{{ g.user['username'] }}">
     <label for="email">Adresse mail de votre compte</label>
     <input type="email" name="email" id="email" required value="{{ g.user['email'] }}">
 	<div>
