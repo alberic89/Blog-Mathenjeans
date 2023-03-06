@@ -6,6 +6,8 @@ from flask import send_from_directory
 from flask_inflate import Inflate
 from flask_minify import Minify
 
+from markupsafe import Markup
+
 from jinja2.filters import do_mark_safe
 
 import markdown
@@ -28,12 +30,10 @@ md_extensions = [
     "smarty",
     "toc",
     "wikilinks",
-    "superscript",
-    "subscript",
     "markdown_checklist.extension",
     "markdown_del_ins",
     "markdown_mark",
-    "mdx_unimoji",
+    "markdown_sub_sup",
 ]
 
 extension_configs = {"codehilite": {"use_pygments": "False"}}
@@ -119,8 +119,17 @@ def create_app(test_config=None):
     # the tutorial the blog will be the main index
     app.add_url_rule("/", endpoint="index")
 
+    @app.template_filter("escape")
+    def escape_html(html_text: str) -> Markup:
+        return Markup(
+            html_text.replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace("'", "&prime;")
+            .replace('"', "&quot;")
+        )
+
     @app.template_filter("markdown")
-    def use_markdown(md_text: str) -> str:
+    def use_markdown(md_text: str) -> Markup:
         return do_mark_safe(
             markdown.markdown(
                 md_text,
