@@ -23,9 +23,9 @@
         {% endif %}
       </header>
        {% if post['html']%}
-      <p class="body">{{ post['body'] | safe | markdown}}</p>
+      <div class="post-content">{{ post['body'] | markdown }}</div>
       {% else %}
-      <p class="body">{{ post['body'] | forceescape | markdown}}</p>
+      <div class="post-content">{{ post['body'] | escape | markdown }}</div>
       {% endif %}
       {% if post['edit'] %}<header><div class="about">Édité le {{ post['edit'].strftime('%d/%m/%-y à %H:%M') }}</div></header>{% endif %}
     </article>

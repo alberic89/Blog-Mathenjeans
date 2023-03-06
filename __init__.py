@@ -3,8 +3,40 @@ import os
 from flask import Flask
 from flask import render_template
 from flask import send_from_directory
-from flaskext.markdown import Markdown
 from flask_inflate import Inflate
+from flask_minify import Minify
+
+from jinja2.filters import do_mark_safe
+
+import markdown
+
+md_extensions = [
+    "extra",
+    "codehilite",
+    "abbr",
+    "attr_list",
+    "def_list",
+    "fenced_code",
+    "footnotes",
+    "tables",
+    "admonition",
+    "legacy_attrs",
+    "legacy_em",
+    "meta",
+    "nl2br",
+    "sane_lists",
+    "smarty",
+    "toc",
+    "wikilinks",
+    "superscript",
+    "subscript",
+    "markdown_checklist.extension",
+    "markdown_del_ins",
+    "markdown_mark",
+    "mdx_unimoji",
+]
+
+extension_configs = {"codehilite": {"use_pygments": "False"}}
 
 
 def page_not_found(e):
@@ -46,9 +78,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    Markdown(app)
     inf = Inflate()
     inf.init_app(app)
+    Minify(app=app)
 
     @app.route("/hello")
     def hello():
@@ -60,6 +92,14 @@ def create_app(test_config=None):
             os.path.join(app.root_path, "static"),
             "favicon.ico",
             mimetype="image/vnd.microsoft.icon",
+        )
+
+    @app.route("/robots.txt")
+    def robot():
+        return send_from_directory(
+            os.path.join(app.root_path, "static"),
+            "robots.txt",
+            mimetype="text/plain",
         )
 
     # register the database commands
@@ -78,5 +118,15 @@ def create_app(test_config=None):
     # app.route, while giving the blog blueprint a url_prefix, but for
     # the tutorial the blog will be the main index
     app.add_url_rule("/", endpoint="index")
+
+    @app.template_filter("markdown")
+    def use_markdown(md_text: str) -> str:
+        return do_mark_safe(
+            markdown.markdown(
+                md_text,
+                extensions=md_extensions,
+                extension_configs=extension_configs,
+            )
+        )
 
     return app
